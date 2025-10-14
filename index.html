@@ -1,15 +1,461 @@
 <!DOCTYPE html>
-<!-- saved from url=(0035)http://127.0.0.1:5500/trangchu.HTML -->
+<!-- saved from url=(0030)http://127.0.0.1:5500/web.html -->
 <html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>website bán hàng đa cấp</title>
+  
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Shop Trường - Khung cơ bản</title>
+  <style>
+    :root{
+      --bg:#f3fbf7; /* very light mint */
+      --card:#ffffff;
+      --accent:#57c49b; /* soft green */
+      --accent-2:#7fe0b8;
+      --muted:#6b6b6b;
+      --glass: rgba(255,255,255,0.7);
+      --shadow: 0 6px 18px rgba(16,24,40,0.06);
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--bg), #e9f9ef 60%);
+      color:#08303a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+    .container{max-width:1100px;margin:0 auto;}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo {
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+    }
+    .logo svg{width:34px;height:34px;fill:white}
+    nav a{margin-right:10px;color:rgba(8,48,58,0.85);text-decoration:none;font-weight:600}
+
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn-ghost{background:transparent;border:2px solid rgba(8,48,58,0.06);padding:8px 12px;border-radius:10px}
+
+    main{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+
+    /* left column */
+    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero{display:flex;gap:18px;align-items:center}
+    .hero h1{margin:0;font-size:22px}
+    .search{flex:1;display:flex;gap:8px}
+    .search input{flex:1;padding:10px;border-radius:10px;border:2px solid rgba(8,48,58,0.06)}
+
+    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .product{
+      background:linear-gradient(180deg,#fff,#f9fffb);padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:space-between;border:1px dashed rgba(87,196,155,0.15);
+    }
+    .placeholder{
+      width:100%;height:110px;border-radius:8px;background:linear-gradient(90deg,#f0fff6,#eefef8);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;border:2px dashed rgba(8,48,58,0.04)
+    }
+    .product h3{margin:0;font-size:15px}
+    .product .meta{font-size:13px;color:var(--muted)}
+    .product .actions{display:flex;gap:8px}
+
+    /* right column (cart + user) */
+    .cart-list{display:flex;flex-direction:column;gap:10px}
+    .cart-item{display:flex;gap:10px;align-items:center;background:var(--glass);padding:8px;border-radius:10px}
+    .cart-item .qty{background:rgba(8,48,58,0.06);padding:6px 9px;border-radius:8px}
+
+    footer{margin-top:26px;text-align:center;color:var(--muted)}
+
+    /* modals simple */
+    .overlay{position:fixed;inset:0;background:rgba(4,20,10,0.25);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{width:100%;max-width:520px;background:var(--card);padding:18px;border-radius:14px;box-shadow:var(--shadow)}
+    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+    input[type=text],input[type=password],input[type=email],input[type=number]{padding:10px;border-radius:8px;border:1px solid rgba(8,48,58,0.06)}
+
+    .small{font-size:13px;color:var(--muted)}
+
+    @media (max-width:900px){
+      main{grid-template-columns:1fr;}
+      .products{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .products{grid-template-columns:repeat(1,1fr)}
+    }
+  </style>
 </head>
 <body>
-    <h1>click vào:<a href="http://127.0.0.1:5500/luutru/conca.HTML">kiếm robux miễn phí </a>  để kiếm vô hạn robux miễn phí</h1>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="">
+          <!-- playful cart-smile icon -->
+          <svg viewBox="0 0 24 24"><path d="M3 3h2l1.4 7.6A3 3 0 0 0 9.3 13H19a1 1 0 0 0 .9-.6l2-5A1 1 0 0 0 21 6H7.2"></path><circle cx="10" cy="19" r="1.5"></circle><circle cx="18" cy="19" r="1.5"></circle></svg>
+        </div>
+        <div>
+          <div style="font-weight:800;">Shop Trường</div>
+          <div class="small">Nhỏ - Xanh - Vui</div>
+        </div>
+      </div>
 
-    <img src="data:image/jpeg;base64,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" alt="robux miễn phí!!!">
-<p>robux là gì:<a href="http://127.0.0.1:5500/luutru/robuxlagivacachnhan.HTML"><button>click vào đây để có thêm thông tin</button></a> </p>
+      <nav>
+        <a href="http://127.0.0.1:5500/web.html#home" onclick="showSection(&#39;home&#39;);return false">Trang chủ</a>
+        <a href="http://127.0.0.1:5500/web.html#sell" onclick="showSection(&#39;sell&#39;);return false">Bán hàng</a>
+        <a href="http://127.0.0.1:5500/web.html#cart" onclick="focusCart();return false">Giỏ hàng (<span id="cart-count">0</span>)</a>
+        <button class="btn" onclick="openModal(&#39;login&#39;)">Đăng nhập</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- left: content -->
+      <div>
+        <section id="home" class="card">
+          <div class="hero">
+            <div style="flex:1">
+              <h1>Chào mừng đến với khung web bán hàng (dành cho trường)</h1>
+              <p class="small">Giao diện đơn giản, tông xanh nhẹ, chờ ảnh sản phẩm — bạn có thể thêm ảnh sau.</p>
+            </div>
+            <div style="width:320px">
+              <div class="card">
+                <div style="display:flex;gap:8px;margin-bottom:8px">
+                  <input id="search" placeholder="Tìm sản phẩm..." oninput="renderProducts()">
+                  <button class="btn" onclick="renderProducts()">Tìm</button>
+                </div>
+                <div class="small">Đăng ký/Đăng nhập đơn giản — dữ liệu lưu trong trình duyệt (local)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="products" id="product-grid"><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm A</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">12.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pw6o4w30&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pw6o4w30&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm B</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">25.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pzj99u1v&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pzj99u1v&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm C</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">8.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pgjoptft&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pgjoptft&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm D</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">50.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pntp4y3n&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pntp4y3n&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm E</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">3.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pp8ppkwg&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pp8ppkwg&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div><div class="product">
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>Sản phẩm F</h3><div class="meta">Mô tả ngắn</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">45.000 VND</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct(&#39;pbx2pgb2&#39;)">Xem</button>
+              <button class="btn" onclick="addToCart(&#39;pbx2pgb2&#39;)">Thêm</button>
+            </div>
+          </div>
+        </div></div>
+        </section>
+
+        <section id="sell" class="card" style="margin-top:12px;display:none">
+          <h3>Thêm sản phẩm (Bán hàng)</h3>
+          <p class="small">Form đơn giản — tên, mô tả ngắn, giá. Sản phẩm sẽ xuất hiện ở trang chủ.</p>
+          <div style="margin-top:10px">
+            <div class="form-row">
+              <label>Tên sản phẩm</label>
+              <input type="text" id="sell-name" placeholder="Ví dụ: Bánh tráng tấm">
+            </div>
+            <div class="form-row">
+              <label>Mô tả</label>
+              <input type="text" id="sell-desc" placeholder="Mô tả ngắn">
+            </div>
+            <div class="form-row">
+              <label>Giá (VND)</label>
+              <input type="number" id="sell-price" placeholder="10000">
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="btn" onclick="addProductFromSell()">Đăng bán</button>
+              <div class="small">Sản phẩm sẽ lưu trên localStorage của trình duyệt.</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- right: cart & account -->
+      <aside>
+        <div class="card">
+          <h3>Giỏ hàng</h3>
+          <div class="cart-list" id="cart-list"><div class="small">Giỏ hàng trống</div></div>
+          <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+            <div style="flex:1">
+              <div class="small">Tổng:</div>
+              <div style="font-weight:800;font-size:18px" id="cart-total">0 VND</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn" onclick="checkout()">Mua hàng</button>
+              <button class="btn-ghost" onclick="clearCart()">Xóa</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4>Tài khoản</h4>
+          <div id="whoami" class="small">Chưa có người đăng nhập</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn-ghost" onclick="openModal(&#39;register&#39;)">Đăng ký</button>
+            <button class="btn" onclick="openModal(&#39;login&#39;)">Đăng nhập</button>
+          </div>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer>
+      Khung cơ bản — dùng localStorage. Mình để mọi thao tác đơn giản để dễ dạy/triển khai trong trường.
+    </footer>
+  </div>
+
+  <!-- modals -->
+  <div id="overlay" class="overlay">
+    <div class="modal" id="modal-content">
+      <!-- content injected by JS -->
+    </div>
+  </div>
+
+  <script>
+    // --- Simple demo data and localStorage helpers ---
+    const STORAGE_PRODUCTS = 'school_shop_products_v1';
+    const STORAGE_USERS = 'school_shop_users_v1';
+    const STORAGE_CART = 'school_shop_cart_v1';
+
+    function uid(prefix='id'){return prefix + Math.random().toString(36).slice(2,9)}
+
+    function loadProducts(){
+      try{ return JSON.parse(localStorage.getItem(STORAGE_PRODUCTS)) || defaultProducts(); }catch(e){return defaultProducts()}
+    }
+    function saveProducts(list){ localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(list)) }
+
+    function loadUsers(){ try{return JSON.parse(localStorage.getItem(STORAGE_USERS))||[] }catch(e){return[]} }
+    function saveUsers(arr){ localStorage.setItem(STORAGE_USERS, JSON.stringify(arr)) }
+
+    function loadCart(){ try{return JSON.parse(localStorage.getItem(STORAGE_CART))||{} }catch(e){return{}} }
+    function saveCart(c){ localStorage.setItem(STORAGE_CART, JSON.stringify(c)) }
+
+    function defaultProducts(){
+      const p = [
+        {id:uid('p'),name:'Sản phẩm A',desc:'Mô tả ngắn',price:12000},
+        {id:uid('p'),name:'Sản phẩm B',desc:'Mô tả ngắn',price:25000},
+        {id:uid('p'),name:'Sản phẩm C',desc:'Mô tả ngắn',price:8000},
+        {id:uid('p'),name:'Sản phẩm D',desc:'Mô tả ngắn',price:50000},
+        {id:uid('p'),name:'Sản phẩm E',desc:'Mô tả ngắn',price:3000},
+        {id:uid('p'),name:'Sản phẩm F',desc:'Mô tả ngắn',price:45000}
+      ];
+      saveProducts(p);return p;
+    }
+
+    // --- Rendering functions ---
+    function renderProducts(){
+      const grid = document.getElementById('product-grid');
+      const q = (document.getElementById('search').value||'').toLowerCase();
+      const products = loadProducts().filter(p=>p.name.toLowerCase().includes(q)|| (p.desc||'').toLowerCase().includes(q));
+      grid.innerHTML = '';
+      products.forEach(p=>{
+        const card = document.createElement('div');card.className='product';
+        card.innerHTML = `
+          <div class="placeholder">Hình (chờ)</div>
+          <div style="width:100%"><h3>${escapeHtml(p.name)}</h3><div class="meta">${escapeHtml(p.desc)}</div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <div style="font-weight:800">${formatVnd(p.price)}</div>
+            <div class="actions">
+              <button class="btn-ghost" onclick="openModalProduct('${p.id}')">Xem</button>
+              <button class="btn" onclick="addToCart('${p.id}')">Thêm</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderCart(){
+      const listEl = document.getElementById('cart-list');
+      const cart = loadCart();
+      listEl.innerHTML = '';
+      const products = loadProducts();
+      let total = 0;let count=0;
+      for(const pid in cart){
+        const qty = cart[pid];
+        const prod = products.find(x=>x.id===pid);
+        if(!prod) continue;
+        total += prod.price*qty; count+=qty;
+        const el = document.createElement('div');el.className='cart-item';
+        el.innerHTML = `<div style="flex:1">
+            <div style="font-weight:700">${escapeHtml(prod.name)}</div>
+            <div class="small">${formatVnd(prod.price)} x ${qty}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div class="qty">${qty}</div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-ghost" onclick="changeQty('${pid}', -1)">-</button>
+              <button class="btn-ghost" onclick="changeQty('${pid}', 1)">+</button>
+            </div>
+          </div>`;
+        listEl.appendChild(el);
+      }
+      if(count===0) listEl.innerHTML = '<div class="small">Giỏ hàng trống</div>';
+      document.getElementById('cart-total').innerText = formatVnd(total);
+      document.getElementById('cart-count').innerText = count;
+    }
+
+    // --- Cart operations ---
+    function addToCart(pid){
+      const cart = loadCart(); cart[pid] = (cart[pid]||0)+1; saveCart(cart); renderCart();
+      toast('Đã thêm vào giỏ');
+    }
+    function changeQty(pid,delta){
+      const cart = loadCart(); if(!cart[pid]) return; cart[pid]+=delta; if(cart[pid]<=0) delete cart[pid]; saveCart(cart); renderCart();
+    }
+    function clearCart(){ localStorage.removeItem(STORAGE_CART); renderCart(); toast('Giỏ hàng đã xóa'); }
+    function checkout(){
+      const user = getCurrentUser();
+      if(!user){ openModal('login'); toast('Bạn cần đăng nhập để mua hàng'); return }
+      const cart = loadCart(); if(Object.keys(cart).length===0){ toast('Giỏ hàng rỗng'); return }
+      // For demo just clear cart and show success
+      localStorage.removeItem(STORAGE_CART); renderCart(); toast('Mua hàng thành công — (giả lập)');
+    }
+
+    // --- Simple auth (register/login) stored in localStorage (not secure; demo only) ---
+    function openModal(mode){
+      const overlay = document.getElementById('overlay');const content = document.getElementById('modal-content');
+      if(mode==='login'){
+        content.innerHTML = `
+          <h3>Đăng nhập</h3>
+          <div class="form-row"><label>Email</label><input id="login-email" type="email" placeholder="nhập email"></div>
+          <div class="form-row"><label>Mật khẩu</label><input id="login-pass" type="password" placeholder="mật khẩu"></div>
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+            <button class="btn-ghost" onclick="closeModal()">Hủy</button>
+            <button class="btn" onclick="doLogin()">Đăng nhập</button>
+          </div>
+        `;
+      } else if(mode==='register'){
+        content.innerHTML = `
+          <h3>Đăng ký (đơn giản)</h3>
+          <div class="form-row"><label>Họ & tên</label><input id="reg-name" type="text" placeholder="Tên của bạn"></div>
+          <div class="form-row"><label>Email</label><input id="reg-email" type="email" placeholder="Email"></div>
+          <div class="form-row"><label>Mật khẩu</label><input id="reg-pass" type="password" placeholder="Mật khẩu"></div>
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+            <button class="btn-ghost" onclick="closeModal()">Hủy</button>
+            <button class="btn" onclick="doRegister()">Tạo tài khoản</button>
+          </div>
+        `;
+      }
+      overlay.style.display='flex';
+    }
+    function openModalProduct(pid){
+      const products = loadProducts(); const p = products.find(x=>x.id===pid); if(!p) return;
+      const overlay = document.getElementById('overlay'); const content = document.getElementById('modal-content');
+      content.innerHTML = `<h3>${escapeHtml(p.name)}</h3>
+        <div class="placeholder" style="height:160px">Hình (chờ)</div>
+        <p class="small">${escapeHtml(p.desc)}</p>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="btn-ghost" onclick="closeModal()">Đóng</button>
+          <button class="btn" onclick="addToCart('${p.id}');closeModal()">Thêm vào giỏ</button>
+        </div>`;
+      overlay.style.display='flex';
+    }
+    function closeModal(){ document.getElementById('overlay').style.display='none'; }
+
+    function doRegister(){
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const pass = document.getElementById('reg-pass').value;
+      if(!email||!pass||!name){ alert('Điền đủ thông tin'); return }
+      const users = loadUsers();
+      if(users.find(u=>u.email===email)){ alert('Email đã có người dùng'); return }
+      const user = {id:uid('u'),name, email, pass}; users.push(user); saveUsers(users);
+      setCurrentUser(user);
+      closeModal(); renderWhoami(); toast('Đăng ký thành công');
+    }
+    function doLogin(){
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pass').value;
+      const users = loadUsers();
+      const user = users.find(u=>u.email===email && u.pass===pass);
+      if(!user){ alert('Sai email hoặc mật khẩu'); return }
+      setCurrentUser(user); closeModal(); renderWhoami(); toast('Đăng nhập thành công');
+    }
+
+    function setCurrentUser(u){ localStorage.setItem('school_shop_current_user', JSON.stringify(u)) }
+    function getCurrentUser(){ try{return JSON.parse(localStorage.getItem('school_shop_current_user')) }catch(e){return null} }
+    function logout(){ localStorage.removeItem('school_shop_current_user'); renderWhoami(); toast('Đã đăng xuất') }
+
+    function renderWhoami(){
+      const el = document.getElementById('whoami'); const u = getCurrentUser();
+      if(!u) { el.innerHTML = 'Chưa có người đăng nhập'; return }
+      el.innerHTML = `<div style="font-weight:700">${escapeHtml(u.name)}</div><div class="small">${escapeHtml(u.email)}</div><div style="margin-top:8px"><button class="btn-ghost" onclick="logout()">Đăng xuất</button></div>`;
+    }
+
+    // --- Sell product ---
+    function addProductFromSell(){
+      const name = document.getElementById('sell-name').value.trim();
+      const desc = document.getElementById('sell-desc').value.trim();
+      const price = Number(document.getElementById('sell-price').value);
+      if(!name||!price){ alert('Điền tên và giá'); return }
+      const list = loadProducts(); const p={id:uid('p'),name,desc,price}; list.unshift(p); saveProducts(list); renderProducts(); toast('Đã đăng bán (lưu local)');
+      // clear form
+      document.getElementById('sell-name').value='';document.getElementById('sell-desc').value='';document.getElementById('sell-price').value='';
+    }
+
+    // --- tiny UI helpers ---
+    function showSection(id){ document.getElementById('home').style.display = id==='home'? 'block':'none'; document.getElementById('sell').style.display = id==='sell'? 'block':'none'; if(id==='home') renderProducts(); }
+    function focusCart(){ window.scrollTo({top:0,behavior:'smooth'}); showSection('home'); }
+
+    function toast(msg){
+      // simple temporary message
+      const t = document.createElement('div'); t.style.position='fixed'; t.style.right='20px'; t.style.bottom='20px'; t.style.background='var(--accent)'; t.style.padding='10px 14px'; t.style.color='white'; t.style.borderRadius='10px'; t.style.boxShadow='var(--shadow)'; t.innerText=msg; document.body.appendChild(t);
+      setTimeout(()=>{t.style.opacity=0;t.remove()},1600);
+    }
+
+    // small helpers
+    function formatVnd(n){ if(!n) return '0 VND'; return new Intl.NumberFormat('vi-VN').format(n)+' VND' }
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]}); }
+
+    // --- init ---
+    (function init(){ renderProducts(); renderCart(); renderWhoami(); })();
+  </script>
 <!-- Code injected by live-server -->
 <script>
 	// <![CDATA[  <-- For SVG support
@@ -48,5 +494,8 @@
 	}
 	// ]]>
 </script>
+
+
+
 
 </body></html>
